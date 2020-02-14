@@ -1,2 +1,61 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+///Første del///
+public class NewBehaviourScript : MonoBehaviour
+{
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (GetMouseButtonDown(0))
+        {
+            RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+            if (hit.transform.CompareTag("Puzzle"))
+            {
+                if (!hit.transform.GetComponent<Pieces>().InRightPosition)
+                {
+                    SelectedPiece = hit.transform.GameObject;
+                }
+            }
+        }
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            SelectedPiece = null;
+        }
+
+        if (SelectedPiece is null)
+        {
+            Vector3 MousePoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            SelectedPiece.transform.position = new Vector3(MousePoint.x, MousePoint.y, 0);
+        }
+    }
+}
+
+///Anden del///
+public class NewBehaviourScript1 : MonoBehaviour
+{
+    private Vector3 RightPosition;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        RightPosition = transform.position;
+        transform.position = new Vector3(Random.Range(5f,11f),Random.Range(2.5f,-7))
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if(Vector3.Distance(transform.position,RightPosition)<0,.5f)
+        {
+            transform.position = RightPosition;
+            InRightPosition = true;
+        }
+    }
+}
